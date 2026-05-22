@@ -246,6 +246,15 @@ var cheat9 = false
 
 var displayThings = [
 	function () {
+            if (player.points.lte(836000)) "The number of Cleared Courses is " + format(player.points.div(3000)) + " times of Rosalina's outfits' requirment."
+            else if (player.points.lte(1e20)) "The number of Cleared Courses is " + format(player.points.div(836000)) + " times of Total Clears Rank 1's (Feb. 2024) amount."
+            else if (player.points.lte(1e180)) "If you wrote 3 numbers a second, it would take you " + format(player.points.log(10).div(3)) + " seconds to write down your Cleared Courses amount.<br>"
+            else if (player.points.lte("1e10800")) "If you wrote 3 numbers a second, it would take you " + format(player.points.log(10).div(180)) + " minutes to write down your Cleared Courses amount.<br>Also you can clear " + formatWhole(player.points.log(10).div(180).times(1.1)) + " courses in Easy Endless."
+            else if (player.points.lte("1e259200")) "If you wrote 3 numbers a second, it would take you " + format(player.points.log(10).div(10800)) + " hours to write down your Cleared Courses amount.<br>Also you can clear " + formatWhole(player.points.log(10).div(180).times(1.1)) + " courses in Easy Endless."
+            else if (player.points.lte("1e94608000")) "If you wrote 3 numbers a second, it would take you " + format(player.points.log(10).div(259200)) + " days to write down your Cleared Courses amount.<br>Also you can clear " + formatWhole(player.points.log(10).div(1440)) + " courses in Super Expert Endless."
+            else if (player.points.lte("e9.4608e10")) "If you wrote 3 numbers a second, it would take you " + format(player.points.log(10).div(94608000)) + " years to write down your Cleared Courses amount.<br>Also you can get a " + formatWhole(player.points.log(10).div(540).log(4)) + "-win streak in Versus Mode."
+            else return "If you wrote 3 numbers a second, it would take you " + formatTimeLong(player.points.log(10).div(3)) + " to write down your Cleared Courses amount.<br>Also you can get a " + formatWhole(player.points.log(10).div(540).log(4)) + "-win streak in Versus Mode."
+                    
 		let endgameText = `<br>Endgame: Get all 138 Achievements<br>`
 		let e = ""
 		if (options.endgameShown) e = endgameText
