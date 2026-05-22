@@ -3401,7 +3401,7 @@ addLayer("oneup_mushroom", {
         if (hasMilestone('oneup_mushroom', 1)) multRM = multRM.times(10)
         if (hasUpgrade('frog_suit', 24)) multRM = multRM.pow(upgradeEffect('frog_suit', 24))
         if (hasUpgrade('usa_mushroom', 35)) player.oneup_mushroom.rotten_mushroom = player.oneup_mushroom.rotten_mushroom.add(multRM.times(diff))
-        if (hasMilestone('super_acorn', 1) && hasUpgrade('usa_mushroom', 35)) player.oneup_mushroom.sacrifice = player.oneup_mushroom.sacrifice.add(player.oneup_mushroom.points.times(diff))
+        if (hasMilestone('super_acorn', 1) || hasUpgrade('usa_mushroom', 35)) player.oneup_mushroom.sacrifice = player.oneup_mushroom.sacrifice.add(player.oneup_mushroom.points.times(diff))
     },
     upgrades: {
         11: {
