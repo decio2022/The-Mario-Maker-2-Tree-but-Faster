@@ -2122,7 +2122,7 @@ addLayer("coin", {
         { key: "c", description: "C: Reset for Coins", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
     layerShown() { return true },
-    passiveGeneration() { return player.coin.points.gte(1) || hasAchievement('achievements', 34) },
+    passiveGeneration() { return hasNormalAchievement(11) || hasAchievement('achievements', 34) },
     update(diff) {
         let multPKC = new Decimal(1)
         if (hasUpgrade("coin", 31)) multPKC = multPKC.times(buyableEffect('coin', 11))
@@ -2564,7 +2564,7 @@ addLayer("super_mushroom", {
     branches: ["coin"],
     resetsNothing() { return hasMilestone('super_mushroom', 1) || hasAchievement('achievements', 32) },
     layerShown() { return hasUpgrade('coin', 14) || hasAchievement('achievements', 11) },
-    passiveGeneration() { return hasUpgrade('coin', 35) || hasAchievement('achievements', 34) || player.super_mushroom.points.gte(1) },
+    passiveGeneration() { return hasUpgrade('coin', 35) || hasAchievement('achievements', 34) || hasNormalAchievement(11) },
     autoUpgrade() { return hasMilestone('invincible_star', 3) || hasAchievement('achievements', 61) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -2841,8 +2841,7 @@ addLayer("fire_flower", {
 
     autoUpgrade() { return hasUpgrade('invincible_star', 32) || hasAchievement('achievements', 61) },
 
-    passiveGeneration() { return hasUpgrade('bouncy_ball_flower', 12) || hasAchievement('achievements', 61) || player.fire_flower.points.gte(1) },
-
+    passiveGeneration() { return hasUpgrade('bouncy_ball_flower', 12) || hasAchievement('achievements', 61) || hasNormalAchievement(15) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -3063,7 +3062,7 @@ addLayer("invincible_star", {
     canBuyMax() { return hasMilestone("invincible_star", 2) || hasAchievement('achievements', 61) },
 
     resetsNothing() { return hasAchievement("achievements", 44) || hasAchievement('achievements', 61) },
-    autoPrestige() { return hasAchievement("achievements", 44) || hasAchievement('achievements', 61) || player.invincible_star.points.gte(1) },
+    autoPrestige() { return hasAchievement("achievements", 44) || hasAchievement('achievements', 61) || hasNormalAchievement(25) },
     autoUpgrade() { return hasAchievement('achievements', 63) || hasMilestone('super_leaf', 0) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -3373,7 +3372,7 @@ addLayer("oneup_mushroom", {
     layerShown() { return hasUpgrade('invincible_star', 25) || hasAchievement('achievements', 35) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     autoUpgrade() { return hasMilestone('super_leaf', 6) || hasAchievement('achievements', 83) },
-    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || player.oneup_mushroom.points.gte(1) },
+    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || hasNormalAchievement(35) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -3737,7 +3736,7 @@ addLayer("bouncy_ball_flower", {
 
     layerShown() { return hasUpgrade('invincible_star', 35) || hasAchievement('achievements', 43) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || player.bouncy_ball_flower.points.gte(1) },
+    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || hasNormalAchievement(43) },
     autoUpgrade() { return hasMilestone('super_leaf', 7) || hasAchievement('achievements', 83) }, //冲突点位，需要调整
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -3764,7 +3763,7 @@ addLayer("bouncy_ball_flower", {
         multBB = multBB.times(buyableEffect('bouncy_ball_flower', 13))
         if (hasMilestone('invincible_star', 4)) multBB = multBB.times(1e20)
         if (hasUpgrade('super_leaf', 24)) multBB = multBB.times("1.797e308")
-        if ((hasUpgrade('bouncy_ball_flower', 32) || hasAchievement('achievements', 62)) && hasUpgrade('bouncy_ball_flower', 11) || player.bouncy_ball_flower.bouncy_ball.points.gte(1)) player.bouncy_ball_flower.bouncy_ball = player.bouncy_ball_flower.bouncy_ball.add(multBB.times(diff).times(10))
+        if ((hasUpgrade('bouncy_ball_flower', 32) || hasAchievement('achievements', 62)) && hasUpgrade('bouncy_ball_flower', 11)) player.bouncy_ball_flower.bouncy_ball = player.bouncy_ball_flower.bouncy_ball.add(multBB.times(diff).times(10))
         //购买项自动化
         let bb = player.bouncy_ball_flower.bouncy_ball
         let x1 = player.bouncy_ball_flower.buyables[11]
@@ -4098,7 +4097,7 @@ addLayer("big_mushroom", {
         if (hasUpgrade('big_mushroom', 34)) exp = exp.times(2)
         return exp
     },
-    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || player.big_mushroom.points.gte(1) },
+    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || hasNormalAchievement(52) },
     layerShown() { return hasUpgrade('bouncy_ball_flower', 35) || hasAchievement('achievements', 52) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     autoUpgrade() { return hasMilestone('super_leaf', 9) || hasAchievement('achievements', 83) }, // 冲突
@@ -4324,7 +4323,7 @@ addLayer("big_mushroom", {
         if (hasUpgrade('super_leaf', 11)) BMBB = BMBB.times(20)
         if (hasUpgrade('super_leaf', 13)) BMBB = BMBB.times(20).pow(1.25).times(0.05)
         if (hasMilestone('cape_feather', 0)) BMBB = BMBB.times(1e200)
-        if ((hasUpgrade('big_mushroom', 33) || hasAchievement('achievements', 62)) && hasUpgrade('big_mushroom', 11) || player.big_mushroom.broken_brick.points.gte(1)) player.big_mushroom.broken_brick = player.big_mushroom.broken_brick.add(BMBB.times(10).times(diff))
+        if ((hasUpgrade('big_mushroom', 33) || hasAchievement('achievements', 62)) || hasUpgrade('big_mushroom', 11)) player.big_mushroom.broken_brick = player.big_mushroom.broken_brick.add(BMBB.times(10).times(diff))
         let BMBHB = new Decimal(1)
         if (hasMilestone('super_leaf', 0)) BMBHB = BMBHB.times(1.25)
         if (hasUpgrade('big_mushroom', 21)) BMBHB = BMBHB.times(clickableEffect('big_mushroom', 11))
@@ -4479,7 +4478,7 @@ addLayer("super_leaf", {
     },
 
     autoUpgrade() { return hasMilestone('propeller_mushroom', 2) },
-    passiveGeneration() { return hasMilestone('propeller_mushroom', 2) || player.super_leaf.points.gte(1) },
+    passiveGeneration() { return hasMilestone('propeller_mushroom', 2) || hasNormalAchievement(55)},
 
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -5074,8 +5073,8 @@ addLayer("cape_feather", {
     canBuyMax() { return hasUpgrade("cape_feather", 33) },
 
     autoUpgrade() { return hasMilestone('propeller_mushroom', 3) },
-    autoPrestige() { return hasMilestone('propeller_mushroom', 3) || player.cape_feather.points.gte(1) },
-    resetsNothing() { return hasMilestone('propeller_mushroom', 3) || player.cape_feather.points.gte(9) },
+    autoPrestige() { return hasMilestone('propeller_mushroom', 3) || hasNormalAchievement(72)},
+    resetsNothing() { return hasMilestone('propeller_mushroom', 3) || hasNormalAchievement(72) },
 
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
