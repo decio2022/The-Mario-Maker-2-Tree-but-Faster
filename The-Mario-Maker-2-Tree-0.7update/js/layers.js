@@ -5426,7 +5426,7 @@ addLayer("yoshi_egg", {
     },
 
     layerShown() { return hasAchievement('achievements', 81) },          // Returns a bool for if this layer's node should be visible in the tree.
-    passiveGeneration() { return hasMilestone('propeller_mushroom', 5) },
+    passiveGeneration() { return hasMilestone('propeller_mushroom', 5) || hasAchievement('achievements', 81) },
     autoUpgrade() { return hasMilestone('propeller_mushroom', 6) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -5448,8 +5448,8 @@ addLayer("yoshi_egg", {
     update(diff) {
         multY = new Decimal(1)
         if (hasUpgrade('yoshi_egg', 34)) multY = multY.times(player.yoshi_egg.points)
-        if (hasUpgrade('yoshi_egg', 34)) player.yoshi_egg.yoshi = player.yoshi_egg.yoshi.add(multY.times(diff))
-        if (hasUpgrade('yoshi_egg', 34)) player.yoshi_egg.red_yoshi = player.yoshi_egg.red_yoshi.add(multY.times(diff))
+        if (hasUpgrade('yoshi_egg', 12)) player.yoshi_egg.yoshi = player.yoshi_egg.yoshi.add(multY.times(diff))
+        if (hasUpgrade('yoshi_egg', 12)) player.yoshi_egg.red_yoshi = player.yoshi_egg.red_yoshi.add(multY.times(diff))
     },
     upgrades: {
         11: {
@@ -5855,7 +5855,7 @@ addLayer("propeller_mushroom", {
 
     layerShown() { return hasUpgrade('yoshi_egg', 25) || hasAchievement('achievements', 83) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    passiveGeneration() { return hasUpgrade('super_hammer', 31) || hasMilestone('master_sword', 2) },
+    passiveGeneration() { return hasUpgrade('yoshi_egg', 25) || hasAchievement('achievements', 83) },
     autoUpgrade() { return hasMilestone('master_sword', 4) },
     upgrades: {
         11: {
@@ -6119,7 +6119,7 @@ addLayer("super_bell", {
     },
 
     layerShown() { return hasAchievement('achievements', 91) },          // Returns a bool for if this layer's node should be visible in the tree.
-    passiveGeneration() { return hasUpgrade('super_hammer', 32) || hasMilestone('master_sword', 2) },
+    passiveGeneration() { return hasUpgrade('super_hammer', 32) || hasMilestone('master_sword', 2) || hasAchievement('achievements', 91) },
     autoUpgrade() { return hasMilestone('master_sword', 4) },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -6305,13 +6305,13 @@ addLayer("super_bell", {
     },
     automate() {
         if (player.super_bell.points.lte(0)) return
-        if (hasUpgrade('super_bell', 32)
+        if (hasUpgrade('super_bell', 21)
         ) {
             if (player.super_bell.points) {
-                hasUpgrade('super_bell', 32) ? setBuyableAmount("super_bell", 11, tmp.super_bell.buyables[11].canAfford ? player.super_bell.points.log(2).floor().add(1) : getBuyableAmount("super_bell", 11)) : buyBuyable("super_bell", 11)
+                hasUpgrade('super_bell', 21) ? setBuyableAmount("super_bell", 11, tmp.super_bell.buyables[11].canAfford ? player.super_bell.points.log(2).floor().add(1) : getBuyableAmount("super_bell", 11)) : buyBuyable("super_bell", 11)
             }
             if (player.super_bell.dimone) {
-                hasUpgrade('super_bell', 32) ? setBuyableAmount("super_bell", 12, tmp.super_bell.buyables[12].canAfford ? player.super_bell.dimone.log(100000).floor() : getBuyableAmount("super_bell", 12)) : buyBuyable("super_bell", 12)
+                hasUpgrade('super_bell', 21) ? setBuyableAmount("super_bell", 12, tmp.super_bell.buyables[12].canAfford ? player.super_bell.dimone.log(100000).floor() : getBuyableAmount("super_bell", 12)) : buyBuyable("super_bell", 12)
             }
         }
     },
@@ -6477,7 +6477,7 @@ addLayer("super_hammer", {
         }
     },
     autoUpgrade() { return hasMilestone('master_sword', 5) },
-    passiveGeneration() { return hasMilestone('master_sword', 6) },
+    passiveGeneration() { return hasMilestone('master_sword', 6) || hasAchievement('achievements', 94) },
     hotkeys: [
         { key: "h", description: "H: Reset for Super Hammers", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
@@ -6798,13 +6798,13 @@ addLayer("super_hammer", {
     },
     automate() {
         if (player.super_hammer.characters_box.lte(0)) return
-        if (hasMilestone('master_sword', 6)
+        if (hasUpgrade('super_hammer', 21)
         ) {
             if (player.super_hammer.characters_box) {
-                (hasMilestone('master_sword', 6)) ? setBuyableAmount("super_hammer", 11, tmp.super_hammer.buyables[11].canAfford ? player.super_hammer.characters_box.log(2).sub(1).root(1.35).floor().add(1) : getBuyableAmount("super_hammer", 11)) : buyBuyable("super_hammer", 11)
+                (hasUpgrade('super_hammer', 21)) ? setBuyableAmount("super_hammer", 11, tmp.super_hammer.buyables[11].canAfford ? player.super_hammer.characters_box.log(2).sub(1).root(1.35).floor().add(1) : getBuyableAmount("super_hammer", 11)) : buyBuyable("super_hammer", 11)
             }
             if (player.super_hammer.characters_box) {
-                (hasMilestone('master_sword', 6)) ? setBuyableAmount("super_hammer", 12, tmp.super_hammer.buyables[12].canAfford ? player.super_hammer.characters_box.div(3.3333e33).log(5).sub(1).root(1.75).floor().add(1) : getBuyableAmount("super_hammer", 12)) : buyBuyable("super_hammer", 12)
+                (hasUpgrade('master_sword', 11)) ? setBuyableAmount("super_hammer", 12, tmp.super_hammer.buyables[12].canAfford ? player.super_hammer.characters_box.div(3.3333e33).log(5).sub(1).root(1.75).floor().add(1) : getBuyableAmount("super_hammer", 12)) : buyBuyable("super_hammer", 12)
             }
         }
     },
