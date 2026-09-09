@@ -2122,7 +2122,7 @@ addLayer("coin", {
         { key: "c", description: "C: Reset for Coins", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
     layerShown() { return true },
-    passiveGeneration() { return hasNormalAchievement(11) || hasAchievement('achievements', 34) },
+    passiveGeneration() { return true },
     update(diff) {
         let multPKC = new Decimal(1)
         if (hasUpgrade("coin", 31)) multPKC = multPKC.times(buyableEffect('coin', 11))
@@ -2199,7 +2199,7 @@ addLayer("coin", {
         if (hasNormalAchievement(205) && !hasUpgrade('coop', 15)) player.coop.upgrades.push(15)
         if (hasNormalAchievement(224) && !hasMilestone('versus', 10)) player.versus.milestones.push(10)
     },
-    autoUpgrade() { return hasUpgrade('fire_flower', 12) || hasAchievement('achievements', 31) },
+    autoUpgrade() { return false },
     pinkKeyCoinEffect() {
         let eff = Decimal.pow(player.coin.pink_key_coin.max(0), 1.5).add(1)
         return eff
@@ -2431,10 +2431,10 @@ addLayer("coin", {
     },
     automate() {
         if (player.coin.pink_key_coin.lte(0)) return
-        if (hasMilestone('fire_flower', 0) || hasAchievement('achievements', 33) || hasUpgrade("fire_flower", 13)) {
+        if (true) {
             if (buyableCanAfford("coin", 11)) setBuyableAmount("coin", 11, player.coin.pink_key_coin.max(2).log(2).sub(1).root(1.5).floor().add(1))
             if (buyableCanAfford("coin", 12)) setBuyableAmount("coin", 12, player.coin.pink_key_coin.max(5).log(5).sub(1).root(1.75).floor().add(1))
-            if ((hasMilestone("invincible_star", 0) || hasAchievement('achievements', 33)) && buyableCanAfford("coin", 13)) setBuyableAmount("coin", 13, player.coin.pink_key_coin.max(8).log(8).sub(1).root(2).floor().add(1))
+            if (buyableCanAfford("coin", 13)) setBuyableAmount("coin", 13, player.coin.pink_key_coin.max(8).log(8).sub(1).root(2).floor().add(1))
         }
     },
     milestones: {
@@ -2564,8 +2564,8 @@ addLayer("super_mushroom", {
     branches: ["coin"],
     resetsNothing() { return hasMilestone('super_mushroom', 1) || hasAchievement('achievements', 32) },
     layerShown() { return hasUpgrade('coin', 14) || hasAchievement('achievements', 11) },
-    passiveGeneration() { return hasUpgrade('coin', 35) || hasAchievement('achievements', 34) || hasNormalAchievement(11) },
-    autoUpgrade() { return hasMilestone('invincible_star', 3) || hasAchievement('achievements', 61) },
+    passiveGeneration() { return true },
+    autoUpgrade() { return false },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -2712,9 +2712,9 @@ addLayer("super_mushroom", {
     },
     automate() {
         if (player.super_mushroom.points.lte(0)) return
-        if (hasMilestone('oneup_mushroom', 0) || hasUpgrade("fire_flower", 11)) {
+        if (true) {
             if (player.super_mushroom.points) {
-                hasMilestone('oneup_mushroom', 0) ? setBuyableAmount("super_mushroom", 11, tmp.super_mushroom.buyables[11].canAfford ? player.super_mushroom.points.max(3e24).log(3e24).subtract(1).root(1.5).floor().add(1) : getBuyableAmount("super_mushroom", 11)) : buyBuyable("super_mushroom", 11)
+                true ? setBuyableAmount("super_mushroom", 11, tmp.super_mushroom.buyables[11].canAfford ? player.super_mushroom.points.max(3e24).log(3e24).subtract(1).root(1.5).floor().add(1) : getBuyableAmount("super_mushroom", 11)) : buyBuyable("super_mushroom", 11)
             }
         }
     },
@@ -2839,9 +2839,9 @@ addLayer("fire_flower", {
     branches: ["coin"],
     layerShown() { return hasUpgrade('super_mushroom', 15) || hasAchievement('achievements', 15) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    autoUpgrade() { return hasUpgrade('invincible_star', 32) || hasAchievement('achievements', 61) },
+    autoUpgrade() { return false },
 
-    passiveGeneration() { return hasUpgrade('bouncy_ball_flower', 12) || hasAchievement('achievements', 61) || hasNormalAchievement(15) },
+    passiveGeneration() { return true },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -3062,8 +3062,8 @@ addLayer("invincible_star", {
     canBuyMax() { return hasMilestone("invincible_star", 2) || hasAchievement('achievements', 61) },
 
     resetsNothing() { return hasAchievement("achievements", 44) || hasAchievement('achievements', 61) },
-    autoPrestige() { return hasAchievement("achievements", 44) || hasAchievement('achievements', 61) || hasNormalAchievement(25) },
-    autoUpgrade() { return hasAchievement('achievements', 63) || hasMilestone('super_leaf', 0) },
+    autoPrestige() { return true },
+    autoUpgrade() { return false },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -3251,7 +3251,7 @@ addLayer("invincible_star", {
             },
             rewardDisplay() { return format(challengeEffect(this.layer, this.id)) + "x" },
             unlocked() { return hasUpgrade('oneup_mushroom', 15) },
-            autoComplete() { if (hasAchievement('achievements', 63)) player[this.layer].challenges[this.id] = 1 },
+            autoComplete() { player[this.layer].challenges[this.id] = 1 },
         },
         12: {
             name: "Spikeys",
@@ -3263,7 +3263,7 @@ addLayer("invincible_star", {
             onEnter() { return player.coin.pink_key_coin = new Decimal(0) },
             rewardDescription: "^1.1 Super Mushroom gain",
             unlocked() { return hasChallenge('invincible_star', 11) || hasAchievement('achievements', 63) },
-            autoComplete() { if (hasAchievement('achievements', 63)) player[this.layer].challenges[this.id] = 1 },
+            autoComplete() { player[this.layer].challenges[this.id] = 1 },
         },
     },
     update(diff) {
@@ -3371,8 +3371,8 @@ addLayer("oneup_mushroom", {
 
     layerShown() { return hasUpgrade('invincible_star', 25) || hasAchievement('achievements', 35) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    autoUpgrade() { return hasMilestone('super_leaf', 6) || hasAchievement('achievements', 83) },
-    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || hasNormalAchievement(35) },
+    autoUpgrade() { return false },
+    passiveGeneration() { return true },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -3582,7 +3582,7 @@ addLayer("oneup_mushroom", {
             },
             rewardDisplay() { return format(challengeEffect(this.layer, this.id)) + "x" },
             unlocked() { return hasUpgrade('bouncy_ball_flower', 15) },
-            autoComplete() { if (hasAchievement('achievements', 63)) player[this.layer].challenges[this.id] = 1 },
+            autoComplete() { player[this.layer].challenges[this.id] = 1 },
         },
         12: {
             name: "Fire bubbles",
@@ -3595,7 +3595,7 @@ addLayer("oneup_mushroom", {
             },
             rewardDescription: "Multiply Bouncy Ball gain by 15x, Flower and unlock 6th Bounce Ball upgrade.",
             unlocked() { return hasChallenge('oneup_mushroom', 11) || hasAchievement('achievements', 63) },
-            autoComplete() { if (hasAchievement('achievements', 63)) player[this.layer].challenges[this.id] = 1 },
+            autoComplete() { player[this.layer].challenges[this.id] = 1 },
         },
     },
     clickables: {
@@ -3736,8 +3736,8 @@ addLayer("bouncy_ball_flower", {
 
     layerShown() { return hasUpgrade('invincible_star', 35) || hasAchievement('achievements', 43) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || hasNormalAchievement(43) },
-    autoUpgrade() { return hasMilestone('super_leaf', 7) || hasAchievement('achievements', 83) }, //冲突点位，需要调整
+    passiveGeneration() { return true },
+    autoUpgrade() { return false },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else
@@ -4097,10 +4097,10 @@ addLayer("big_mushroom", {
         if (hasUpgrade('big_mushroom', 34)) exp = exp.times(2)
         return exp
     },
-    passiveGeneration() { return hasMilestone('super_leaf', 5) || hasAchievement('achievements', 64) || hasNormalAchievement(52) },
+    passiveGeneration() { return true },
     layerShown() { return hasUpgrade('bouncy_ball_flower', 35) || hasAchievement('achievements', 52) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    autoUpgrade() { return hasMilestone('super_leaf', 9) || hasAchievement('achievements', 83) }, // 冲突
+    autoUpgrade() { return false },
 
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -4477,8 +4477,8 @@ addLayer("super_leaf", {
         if (hasUpgrade('super_leaf', 201)) player.super_leaf.slsp = player.super_leaf.slsp.add(tmp.super_leaf.multSLSP.times(diff))
     },
 
-    autoUpgrade() { return hasMilestone('propeller_mushroom', 2) },
-    passiveGeneration() { return hasMilestone('propeller_mushroom', 2) || hasNormalAchievement(55)},
+    autoUpgrade() { return false },
+    passiveGeneration() { return true },
 
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -5072,8 +5072,8 @@ addLayer("cape_feather", {
 
     canBuyMax() { return hasUpgrade("cape_feather", 33) },
 
-    autoUpgrade() { return hasMilestone('propeller_mushroom', 3) },
-    autoPrestige() { return hasMilestone('propeller_mushroom', 3) || hasNormalAchievement(72)},
+    autoUpgrade() { return false },
+    autoPrestige() { return true },
     resetsNothing() { return hasMilestone('propeller_mushroom', 3) || hasNormalAchievement(72) },
 
     doReset(resettingLayer) {
@@ -5093,11 +5093,11 @@ addLayer("cape_feather", {
 
     automate() {
         if (player.cape_feather.ce.lte(0)) return
-        if (hasMilestone('propeller_mushroom', 3) || player.cape_feather.ce.gte(1)
+        if (true
         ) {
             if (player.cape_feather.ce) {
-                hasMilestone('propeller_mushroom', 3) ? setBuyableAmount("cape_feather", 11, tmp.cape_feather.buyables[11].canAfford ? player.cape_feather.ce.log(2.75).floor().add(1) : getBuyableAmount("cape_feather", 11)) : buyBuyable("cape_feather", 11)
-                hasMilestone('propeller_mushroom', 3) ? setBuyableAmount("cape_feather", 12, tmp.cape_feather.buyables[12].canAfford ? player.cape_feather.ce.log(6.75).pow(1 / 1.15).floor().add(1) : getBuyableAmount("cape_feather", 12)) : buyBuyable("cape_feather", 12)
+                true ? setBuyableAmount("cape_feather", 11, tmp.cape_feather.buyables[11].canAfford ? player.cape_feather.ce.log(2.75).floor().add(1) : getBuyableAmount("cape_feather", 11)) : buyBuyable("cape_feather", 11)
+                true ? setBuyableAmount("cape_feather", 12, tmp.cape_feather.buyables[12].canAfford ? player.cape_feather.ce.log(6.75).pow(1 / 1.15).floor().add(1) : getBuyableAmount("cape_feather", 12)) : buyBuyable("cape_feather", 12)
             }
         }
     },
@@ -5426,8 +5426,8 @@ addLayer("yoshi_egg", {
     },
 
     layerShown() { return hasAchievement('achievements', 81) },          // Returns a bool for if this layer's node should be visible in the tree.
-    passiveGeneration() { return hasMilestone('propeller_mushroom', 5) || hasAchievement('achievements', 81) },
-    autoUpgrade() { return hasMilestone('propeller_mushroom', 6) },
+    passiveGeneration() { return true },
+    autoUpgrade() { return false },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else if (layers[resettingLayer].row > layers[this.layer].row) {
@@ -5855,8 +5855,8 @@ addLayer("propeller_mushroom", {
 
     layerShown() { return hasUpgrade('yoshi_egg', 25) || hasAchievement('achievements', 83) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    passiveGeneration() { return hasUpgrade('yoshi_egg', 25) || hasAchievement('achievements', 83) },
-    autoUpgrade() { return hasMilestone('master_sword', 4) },
+    passiveGeneration() { return true },
+    autoUpgrade() { return false },
     upgrades: {
         11: {
             title: "Orange helmet",
@@ -6119,8 +6119,8 @@ addLayer("super_bell", {
     },
 
     layerShown() { return hasAchievement('achievements', 91) },          // Returns a bool for if this layer's node should be visible in the tree.
-    passiveGeneration() { return hasUpgrade('super_hammer', 32) || hasMilestone('master_sword', 2) || hasAchievement('achievements', 91) },
-    autoUpgrade() { return hasMilestone('master_sword', 4) },
+    passiveGeneration() { return true },
+    autoUpgrade() { return false },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
         else if (layers[resettingLayer].row > layers[this.layer].row) {
@@ -6305,13 +6305,13 @@ addLayer("super_bell", {
     },
     automate() {
         if (player.super_bell.points.lte(0)) return
-        if (hasUpgrade('super_bell', 21)
+        if (true
         ) {
             if (player.super_bell.points) {
-                hasUpgrade('super_bell', 21) ? setBuyableAmount("super_bell", 11, tmp.super_bell.buyables[11].canAfford ? player.super_bell.points.log(2).floor().add(1) : getBuyableAmount("super_bell", 11)) : buyBuyable("super_bell", 11)
+                true ? setBuyableAmount("super_bell", 11, tmp.super_bell.buyables[11].canAfford ? player.super_bell.points.log(2).floor().add(1) : getBuyableAmount("super_bell", 11)) : buyBuyable("super_bell", 11)
             }
             if (player.super_bell.dimone) {
-                hasUpgrade('super_bell', 21) ? setBuyableAmount("super_bell", 12, tmp.super_bell.buyables[12].canAfford ? player.super_bell.dimone.log(100000).floor() : getBuyableAmount("super_bell", 12)) : buyBuyable("super_bell", 12)
+                true ? setBuyableAmount("super_bell", 12, tmp.super_bell.buyables[12].canAfford ? player.super_bell.dimone.log(100000).floor() : getBuyableAmount("super_bell", 12)) : buyBuyable("super_bell", 12)
             }
         }
     },
@@ -6476,8 +6476,8 @@ addLayer("super_hammer", {
             layerDataReset(this.layer, kept)
         }
     },
-    autoUpgrade() { return hasMilestone('master_sword', 5) },
-    passiveGeneration() { return hasMilestone('master_sword', 6) || hasAchievement('achievements', 94) },
+    autoUpgrade() { return false },
+    passiveGeneration() { return true },
     hotkeys: [
         { key: "h", description: "H: Reset for Super Hammers", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
@@ -6798,13 +6798,13 @@ addLayer("super_hammer", {
     },
     automate() {
         if (player.super_hammer.characters_box.lte(0)) return
-        if (hasUpgrade('super_hammer', 21)
+        if (true
         ) {
             if (player.super_hammer.characters_box) {
-                (hasUpgrade('super_hammer', 21)) ? setBuyableAmount("super_hammer", 11, tmp.super_hammer.buyables[11].canAfford ? player.super_hammer.characters_box.log(2).sub(1).root(1.35).floor().add(1) : getBuyableAmount("super_hammer", 11)) : buyBuyable("super_hammer", 11)
+                true ? setBuyableAmount("super_hammer", 11, tmp.super_hammer.buyables[11].canAfford ? player.super_hammer.characters_box.log(2).sub(1).root(1.35).floor().add(1) : getBuyableAmount("super_hammer", 11)) : buyBuyable("super_hammer", 11)
             }
             if (player.super_hammer.characters_box) {
-                (hasUpgrade('master_sword', 11)) ? setBuyableAmount("super_hammer", 12, tmp.super_hammer.buyables[12].canAfford ? player.super_hammer.characters_box.div(3.3333e33).log(5).sub(1).root(1.75).floor().add(1) : getBuyableAmount("super_hammer", 12)) : buyBuyable("super_hammer", 12)
+                true ? setBuyableAmount("super_hammer", 12, tmp.super_hammer.buyables[12].canAfford ? player.super_hammer.characters_box.div(3.3333e33).log(5).sub(1).root(1.75).floor().add(1) : getBuyableAmount("super_hammer", 12)) : buyBuyable("super_hammer", 12)
             }
         }
     },
@@ -7041,7 +7041,7 @@ addLayer("master_sword", {
         }
     },
 
-    autoPrestige() { return hasMilestone('power_balloon', 4) },
+    autoPrestige() { return true },
 
     upgrades: {
         11: {
@@ -8140,7 +8140,7 @@ addLayer("usa_mushroom", {
         if (hasUpgrade('power_balloon', 11)) player.usa_mushroom.buyables[43] = player.usa_mushroom.grabs.times(buyableEffect('usa_mushroom', 31)).div("1e917").max(1).log(1e100).root(3).floor().add(1)
     },
 
-    passiveGeneration() { return hasMilestone('super_acorn', 2) },
+    passiveGeneration() { return true },
 
     hotkeys: [
         { key: "2", description: "2: Reset for SMB2 Mushrooms", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
@@ -8776,7 +8776,7 @@ addLayer("frog_suit", {
         }
     },
 
-    passiveGeneration() { return hasMilestone('power_balloon', 6) },
+    passiveGeneration() { return true },
 
     upgrades: {
         11: {
@@ -9329,8 +9329,8 @@ addLayer("power_balloon", {
         }
     },
 
-    passiveGeneration() { return hasMilestone('boomerang_flower', 3) },
-    autoUpgrade() { return hasMilestone('boomerang_flower', 6) },
+    passiveGeneration() { return true },
+    autoUpgrade() { return false },
 
     hotkeys: [
         { key: "P", description: "Shift+P: Reset for Power Balloons", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
@@ -9792,7 +9792,7 @@ addLayer("super_acorn", {
         }
     },
 
-    passiveGeneration() { return hasMilestone('boomerang_flower', 5) },
+    passiveGeneration() { return true },
 
     hotkeys: [
         { key: "a", description: "A: Reset for Super Acorns", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
@@ -10399,7 +10399,7 @@ addLayer("boomerang_flower", {
         return new Decimal(1)
     },
 
-    passiveGeneration() { return hasMilestone('mario', 0) },
+    passiveGeneration() { return true },
 
     layerShown() { return hasAchievement('achievements', 125) },          // Returns a bool for if this layer's node should be visible in the tree.
 
@@ -10838,7 +10838,7 @@ addLayer("mario", {
 
     layerShown() { return hasAchievement('achievements', 135) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    autoUpgrade() { return hasMilestone('toad', 2) },
+    autoUpgrade() { return false },
     doReset(resettingLayer) {
         if (layers[resettingLayer].row > layers[this.layer].row) {
             let kept = ["unlocked", "auto"]
@@ -10853,7 +10853,7 @@ addLayer("mario", {
         }
     },
     resetsNothing() { return hasMilestone(this.layer, 5) },
-    autoPrestige() { return hasMilestone(this.layer, 5) },
+    autoPrestige() { return true },
 
     hotkeys: [
         { key: "3", description: "3: Reset for Mario", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
@@ -11482,8 +11482,8 @@ addLayer("luigi", {
 
 
     resetsNothing() { return hasMilestone(this.layer, 2) },
-    autoPrestige() { return hasMilestone(this.layer, 2) },
-    autoUpgrade() { return hasMilestone('toad', 3) },
+    autoPrestige() { return true },
+    autoUpgrade() { return false },
     layerShown() { return hasAchievement('achievements', 143) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     doReset(resettingLayer) {
@@ -11948,7 +11948,7 @@ addLayer("toad", {
 
     layerShown() { return hasAchievement('achievements', 145) },          // Returns a bool for if this layer's node should be visible in the tree.
 
-    passiveGeneration() { return hasUpgrade(this.layer, 21) },
+    passiveGeneration() { return true },
 
     doReset(resettingLayer) {
         if (layers[resettingLayer].row >= 12) return undefined
@@ -13255,7 +13255,7 @@ addLayer("toadette", {
     },
 
     passiveGeneration() {
-        if (hasMilestone('easy', 2)) return 10
+        return 10
     },
 
     hotkeys: [
@@ -13711,7 +13711,7 @@ addLayer("easy", {
             layerDataReset(this.layer, kept)
         }
     },
-    passiveGeneration() { return hasMilestone('normal', 5) },
+    passiveGeneration() { return true },
     hotkeys: [
         { key: "e", description: "E: Reset for Easy Endless", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
     ],
@@ -14327,7 +14327,7 @@ addLayer("easy", {
         },
     },
     automate() {
-        if (hasMilestone('expert', 2)) setBuyableAmount('easy', 11, player.easy.free_c.max(10).log(10).root(1.35).floor().add(1)),
+        if (true) setBuyableAmount('easy', 11, player.easy.free_c.max(10).log(10).root(1.35).floor().add(1)),
             setBuyableAmount('easy', 12, player.easy.free_c.div(1e20).max(256).log(256).root(1.44).floor().add(1))
     },
     update(diff) {
@@ -14595,11 +14595,11 @@ addLayer("normal", {
     onPrestige() {
         return player[this.layer].resetTime = 0
     },
-    passiveGeneration() { return hasMilestone('expert', 8) },
+    passiveGeneration() { return true },
     layerShown() { return hasAchievement('achievements', 174) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     autoUpgrade() {
-        return hasMilestone('expert', 9)
+        return false
     },
     hotkeys: [
         { key: "n", description: "N: Reset for Normal Endless", onPress() { if (canReset(this.layer)) doReset(this.layer) } },
@@ -15079,7 +15079,7 @@ addLayer("normal", {
         if (player.normal.OSCtabStyle.gte(360)) player.normal.OSCtabStyle = d(0)
     },
     automate() {
-        if (hasSEendlessMilestone(6) && player.normal.auto_mario.gte(Decimal.pow(3, getBuyableAmount('normal', 11))))
+        if (player.normal.auto_mario.gte(Decimal.pow(3, getBuyableAmount('normal', 11))))
             setBuyableAmount('normal', 11, player.normal.auto_mario.max(1).log(3).floor().add(1))
     },
     tabFormat: [
@@ -15332,7 +15332,7 @@ addLayer("expert", {
         return new Decimal(1)
     },
 
-    autoPrestige() { return hasMilestone('coop', 3) },
+    autoPrestige() { return true },
     resetsNothing() { return hasMilestone('coop', 3) },
 
     layerShown() { return hasAchievement('achievements', 182) },          // Returns a bool for if this layer's node should be visible in the tree.
@@ -18150,11 +18150,11 @@ addLayer("s_expert", {
         else if (layers[resettingLayer].row >= 15) return undefined
     },
     autoUpgrade() {
-        return hasMilestone('versus', 2)
+        return false
     },
 
     passiveGeneration() {
-        if (player.versus.skill.gte(3141592)) return 0.1
+        return 0.1
     },
 
     hotkeys: [
@@ -19153,7 +19153,7 @@ addLayer("coop", {
     layerShown() { return hasNormalAchievement(203) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     passiveGeneration() {
-        return hasMilestone('themed', 1)
+        return true
     },
 
     upgrades: {
@@ -22095,7 +22095,7 @@ addLayer("versus", {
     },
 
     automate() {
-        if (hasUpgrade('versus', 351)) {
+        if (true) {
             let b = tmp.versus.buyables
             b[11].buyMax()
             b[12].buyMax()
@@ -22711,7 +22711,7 @@ addLayer("themed", {
     layerShown() { return hasMilestone('versus', 10) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     passiveGeneration() {
-        return hasMilestone('precision', 8)
+        return true
     },
 
     doReset(resettingLayer) {
@@ -23362,7 +23362,7 @@ addLayer("speedrun", {
     },
 
     passiveGeneration() {
-        if (hasMilestone('precision', 9)) return d(1e10)
+        return d(1e10)
     },
 
     hotkeys: [
@@ -24064,7 +24064,7 @@ addLayer("precision", {
     },
 
     passiveGeneration() {
-        return hasMilestone('versus', 17)
+        return true
     },
 
     doReset(resettingLayer) {
@@ -24772,7 +24772,7 @@ addLayer("kaizo", {
     layerShown() { return hasNormalAchievement(251) },          // Returns a bool for if this layer's node should be visible in the tree.
 
     passiveGeneration() {
-        return hasMilestone('versus', 17)
+        return true
     },
 
     doReset(resettingLayer) {
@@ -25951,7 +25951,7 @@ addLayer("puzzle", {
     },
 
     resetsNothing() { return hasMilestone('puzzle', 5) },
-    autoPrestige() { return hasMilestone('puzzle', 5) },
+    autoPrestige() { return true },
 
     canBuyMax() {
         return hasMilestone('puzzle', 1)
@@ -26170,7 +26170,7 @@ addLayer("troll", {
     },
 
     passiveGeneration() {
-        if (hasMilestone('troll', 7)) return 1
+        return 1
     },
 
     upgrades: {
